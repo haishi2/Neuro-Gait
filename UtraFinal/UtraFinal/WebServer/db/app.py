@@ -6,7 +6,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)  
 
-client = pymongo.MongoClient("mongodb+srv://shihai797:d6BK2dVfUSBHCxHc@fullstackopen-pt3.vx18ygi.mongodb.net/?retryWrites=true&w=majority&appName=fullstackopen-pt3")
+client = (insert db link here)
 
 db = client['Neuro-Gait']
 
