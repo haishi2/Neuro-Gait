@@ -1,0 +1,154 @@
+* {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.backgroundLayer{
+    background-color: bisque;
+}
+
+.HideTabs{
+    display:none;
+}
+.active{
+    display: block;
+}
+
+.TabBut{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.content{
+    border-radius: 2vw;
+    height: 5vw;
+    width: 15vw;
+    font-weight: bold;
+    margin-top: 3vh; 
+    margin-left: 5vw;
+    margin-right: 5vw;
+}
+
+.content:hover{
+    background-color: black;
+    color: white;
+}
+
+.box {
+    background-color: #D8DFE5;
+    width: 20vw;
+    height: 20vw;
+    border: 0.5vw solid black;
+    margin: 0.5vw;
+    perspective: 100vw;
+  }
+  
+.boxInner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+}
+  
+.box:hover .boxInner {
+    transform: rotateY(180deg);
+}
+  
+.boxFront, .boxBack {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: cursive;
+    text-align: center;
+}
+  
+.boxFront {
+    background-color: #D8DFE5;
+    font-size: 1rem;
+}
+  
+.boxBack {
+    background-color:#7393B3;
+    transform: rotateY(180deg);
+    font-size: 0.75rem;
+  }
+
+.red{
+    background-color: red;
+}
+
+.green{
+    background-color: mediumslateblue,
+    
+}
+
+.boxesContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(20vw, 1fr));
+  gap: 1rem; 
+}
+
+.InputName{
+    border: 10px solid black;
+    margin-bottom: 1vh;
+    width: 20vw;
+    height: 10vh;
+    font-size: 3vh;
+    border-radius: 1vw;
+    text-align: center;
+    background-color: #7393B3;
+    align-items: center;
+    color: black;
+}
+
+.InputName::placeholder{
+    color: black;
+}
+
+.HEADER{
+    display: flex;
+    align-items: center; 
+    flex-direction: column;
+}
+
+.InputButton{
+    border-radius: 1vw;
+    width: 5vw;
+    height: 5vh;
+    border: 0.2vw solid black;
+    background-color: red;
+}
+
+.InputButton:hover{
+    background-color: blue;
+    color: white;
+}
+
+.columns{
+    display: flex;
+    flex-direction: row;
+}
+
+.c1, .c2{
+    background-color: white;
+    width: 50vw;
+    height: 60vh;
+    margin: 2vw;
+    border-radius: 2px;
+}
+
+.c1, .c2{
+    font-size: 3vw;
+    text-align: center;
+}
+
+.uL{
+    list-style-type: none;
+}

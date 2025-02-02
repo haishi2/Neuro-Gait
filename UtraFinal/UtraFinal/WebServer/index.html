@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html class = "backgroundLayer">
+
+  <head>
+    <meta charset="UTF-8" />
+    <title>Neuro Gait</title>
+    <link rel="stylesheet" href="./styles/styles.css" />
+  </head>
+
+  <body>
+    <div id="Main">
+        <div class="HEADER"> 
+            <input type="text" id="userInput" placeholder="Enter Patient Name" class = "InputName">
+            <button onclick="getInput()" class = "InputButton">Submit</button>
+        </div>
+        <!--   <img src="NeuroGaitCurrentLogo.png"/> -->
+        <div class ="TabBut">
+        <button onclick="showTab('info')" class = "content"> Information </button>
+        <button onclick="showTab('recordings')" class = "content"> Recordings  </button>
+        <button onclick="showTab('live')" class = "content"> Live </button> 
+        </div>
+
+        <!--Information tab-->
+        <div id="info" class = "HideTabs">
+            <p id = "infosbox"> </p>
+        </div>
+
+        <!--Recordings Tab-->
+        <div id="recordings" class = "HideTabs">
+            <p class = "boxesContainer" id = "recordingsbox">  </p>
+        </div>
+
+        <!--Live Tab-->
+        <div id="live" class = "HideTabs">
+            <p  id="livebox"> </p>
+        </div>
+
+        <script>
+
+        // Hide tabs accordingly, done via CSS file
+        function showTab(tabId) {
+            document.getElementById('info').classList.remove('active');
+            document.getElementById('recordings').classList.remove('active');
+            document.getElementById('live').classList.remove('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        // Default shows information upon launch
+        showTab('info');
+
+        async function getInput() {
+            let name = document.getElementById("userInput").value;
+            if (!name) {
+                alert("Please enter a patient name");
+                return;
+            }
+            const response = await fetch(`http://127.0.0.1:5000/get_patient?name=${encodeURIComponent(name)}`);
+            const data = await response.json();
+            if (response.ok){
+                const livetool = document.getElementById('livebox');
+                const recordingtool = document.getElementById('recordingsbox');
+                const infotool = document.getElementById('infosbox');
+                allergies = data.Medical_info.allergies
+                conditions = data.Medical_info.conditions
+                medication =  data.Medical_info.medication
+                if (!(allergies.length)){allergies = "None";}
+                else {allergies.join(', ');}
+                if (!(conditions.length)){conditions = "None";}
+                else {conditions.join(', ');}
+                if (!(medication.length)){medication = "None";}
+                else {medication.join(', ');}
+                infotool.innerHTML = `
+                <div class = "columns"> 
+                    <div class = "c1"> 
+                        <p><strong>Name:</strong> ${data.Name}</p>
+                        <p><strong>Age:</strong> ${data.Age}</p>
+                        <p><strong>Height:</strong> ${data.height} cm</p>
+                        <p><strong>Weight:</strong> ${data.weight} kg</p>
+                    </div>
+                    <div class = "c2">
+                    <p><strong>Medical Information:</strong></p>
+                        <ul class = "uL">
+                            <li><strong>Allergies:</strong> ${allergies}</li>
+                            <li><strong>Conditions:</strong> ${conditions}</li>
+                            <li><strong>Medications:</strong> ${medication}</li>
+                        </ul>
+                    </div>
+                </div>
+                `
+                recordingtool.innerHTML ='';
+                (data.Recordings).forEach(recording => {
+                    const div = document.createElement('div');
+                    div.className = 'box';
+                    div.innerHTML = `
+                            <div class="boxInner"> 
+                                <div class = "boxFront ${recording.isFlagged ? "red" : "green"}"">       
+                                    <p><strong>Average Cadence: </strong> ${Number(recording.avgCadence.toFixed(2))}</p>
+                                    <p><strong>Gait Variability: </strong> ${Number(recording.gaitVariability.toFixed(2))}</p>
+                                    <p><strong>Gait Asymmetry: </strong> ${Number(recording.gaitAsymmetry.toFixed(2))}</p>
+                                </div>
+                                <div class = "boxBack ${recording.isFlagged ? "red" : "green"}">
+                                    <p><strong>Average Cadence: </strong> ${Number(recording.avgCadence.toFixed(2))}</p>
+                                    <p><strong>Gait Variability: </strong> ${Number(recording.gaitVariability.toFixed(2))}</p>
+                                    <p><strong>Gait Asymmetry: </strong> ${Number(recording.gaitAsymmetry.toFixed(2))}</p>
+                                    <p><strong>Average Swing Duration: </strong> ${Number(recording.avgSwingDuration.toFixed(2))}</p>
+                                    <p><strong>Average Stance Duration: </strong> ${Number(recording.avgStanceDuration.toFixed(2))}</p>
+                                    <p><strong>Average Stride Duration: </strong> ${Number(recording.avgStrideDuration.toFixed(2))}</p>
+                                </div>
+                            </div> 
+                    `;
+                    recordingtool.appendChild(div);
+                });
+                livetool.innerHTML = 'H3';
+            }
+        }
+        </script>
+    </div>
+  </body>
+</html>
